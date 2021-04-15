@@ -15,19 +15,16 @@ repositories {
     mavenCentral()
     maven { url = 'https://oss.sonatype.org/content/groups/public/' }
     maven { url = "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url = "https://repo.minebench.de/" }
 }
 
 dependencies {
     compileOnly 'net.md-5:bungeecord-api:1.15-SNAPSHOT'
     compile "co.aikar:acf-bungee:0.5.0-SNAPSHOT"
-    compile "de.themoep:minedown:1.7.0-SNAPSHOT"
 }
 
 shadowJar {
   relocate 'co.aikar.commands', 'org.creativecraft.bungeespy.acf'
   relocate 'co.aikar.locales', 'org.creativecraft.bungeespy.locales'
-  relocate 'de.themoep.minedown', 'org.creativecraft.bungeespy.minedown'
 }
 
 processResources {

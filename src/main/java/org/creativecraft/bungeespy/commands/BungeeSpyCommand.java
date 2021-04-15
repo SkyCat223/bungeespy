@@ -2,7 +2,7 @@ package org.creativecraft.bungeespy.commands;
 
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.BaseCommand;
-import de.themoep.minedown.MineDown;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -88,11 +88,14 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
 
         for (ProxiedPlayer p : this.plugin.getProxy().getPlayers()) {
             if (p.hasPermission("bungeespy.use") && isSpy(p.getUniqueId())) {
-                p.sendMessage(MineDown.parse(
-                    this.plugin.getConfig().getString("locale.message")
-                        .replace("{0}", player.getName())
-                        .replace("{1}", event.getMessage())
-                ));
+                p.sendMessage(
+                    ChatColor.translateAlternateColorCodes(
+                        '&',
+                        this.plugin.getConfig().getString("locale.message")
+                            .replace("{0}", player.getName())
+                            .replace("{1}", event.getMessage())
+                    )
+                );
             }
         }
     }

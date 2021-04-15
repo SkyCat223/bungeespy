@@ -1,7 +1,7 @@
 package org.creativecraft.bungeespy;
 
 import co.aikar.commands.BungeeCommandManager;
-import de.themoep.minedown.MineDown;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -58,14 +58,14 @@ public final class BungeeSpy extends Plugin {
     }
 
     /**
-     * Parse a message through MineDown including our prefix.
+     * Parse a message through translate alternate colors with the plugin prefix.
      *
      * @param sender The command sender.
      * @param value  The message value.
      */
     public void message(CommandSender sender, String value) {
         sender.sendMessage(
-            MineDown.parse(getConfig().getString("locale.prefix") + " " + value)
+            ChatColor.translateAlternateColorCodes('&', getConfig().getString("locale.prefix") + " " + value)
         );
     }
 }
