@@ -1,6 +1,8 @@
 locale:
   prefix: "&7[&a&lCreative&fCraft&7]&f"
   message: "&7[&8&l✚&7]&7 {0} executed {1}"
+  list: "Current spies: {0}"
+  list-none: "None"
   toggle-on: "You are now &aspying&f on commands network-wide."
   toggle-off: "You are no longer &aspying&f on commands network-wide."
 spies: {}

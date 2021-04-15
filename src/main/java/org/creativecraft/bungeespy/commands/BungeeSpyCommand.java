@@ -51,9 +51,23 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
         Collection<String> keys = this.plugin.getConfig().getSection("spies").getKeys();
         HashSet<String> spies = new HashSet<String>();
 
-        keys.forEach(spy -> spies.add(this.plugin.getProxy().getPlayer(UUID.fromString(spy)).getName()));
+        keys.forEach(spy -> {
+            ProxiedPlayer s = this.plugin.getProxy().getPlayer(UUID.fromString(spy));
 
-        this.plugin.message(sender, "Current spies: " + String.join(", ", spies));
+            if (s == null) {
+                return;
+            }
+
+            spies.add(s.getName());
+        });
+
+        this.plugin.message(
+            sender,
+            this.plugin.getConfig().getString("locale.list")
+                .replace("{0}", spies.size() != 0 ?
+                    String.join(", ", spies) :
+                    this.plugin.getConfig().getString("locale.list-none"))
+        );
     }
 
     /**
