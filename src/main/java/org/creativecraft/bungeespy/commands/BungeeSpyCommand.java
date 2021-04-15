@@ -26,9 +26,10 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
      * @param player The proxied player.
      */
     @Default
+    @Subcommand("toggle")
     @CommandPermission("bungeespy.use")
     @Description("Toggle network-wide command spying.")
-    public void onBungeeSpyCommand(ProxiedPlayer player) {
+    public void onBungeeSpyCommand(ProxiedPlayer player, @Optional String target) {
         UUID id = player.getUniqueId();
 
         if (this.plugin.isSpy(id)) {
