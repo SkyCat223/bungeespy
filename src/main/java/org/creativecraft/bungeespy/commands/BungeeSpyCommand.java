@@ -34,15 +34,15 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     public void onBungeeSpyCommand(ProxiedPlayer player) {
         UUID id = player.getUniqueId();
 
-        if (isSpy(id)) {
-            setSpy(id, null);
+        if (this.plugin.isSpy(id)) {
+            this.plugin.setSpy(id, null);
 
             this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-off"));
 
             return;
         }
 
-        setSpy(id, true);
+        this.plugin.setSpy(id, true);
 
         this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-on"));
     }
@@ -83,50 +83,6 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
             this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload"));
         } catch (Exception e) {
             this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload-failed"));
-        }
-    }
-
-    /**
-     * Determine if the player is a spy.
-     *
-     * @return boolean
-     */
-    public boolean isSpy(UUID player) {
-        return this.plugin.getConfig().contains("spies." + player);
-    }
-
-    /**
-     * Set a spy.
-     */
-    public void setSpy(UUID player, Object value) {
-        this.plugin.getConfig().set("spies." + player, value);
-        this.plugin.saveConfig();
-    }
-
-    /**
-     * Sends server and network commands to admins.
-     *
-     * @param event The chat event.
-     */
-    @EventHandler
-    public void onChatEvent(ChatEvent event) {
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-
-        if (!event.isCommand() && !event.isProxyCommand()) {
-            return;
-        }
-
-        for (ProxiedPlayer p : this.plugin.getProxy().getPlayers()) {
-            if (p.hasPermission("bungeespy.use") && isSpy(p.getUniqueId())) {
-                p.sendMessage(
-                    ChatColor.translateAlternateColorCodes(
-                        '&',
-                        this.plugin.getConfig().getString("locale.message")
-                            .replace("{0}", player.getName())
-                            .replace("{1}", event.getMessage())
-                    )
-                );
-            }
         }
     }
 }

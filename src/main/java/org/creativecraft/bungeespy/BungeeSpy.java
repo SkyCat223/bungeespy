@@ -7,6 +7,8 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import org.creativecraft.bungeespy.commands.BungeeSpyCommand;
 
+import java.util.UUID;
+
 public final class BungeeSpy extends Plugin {
     private BungeeSpyConfig config;
 
@@ -21,7 +23,7 @@ public final class BungeeSpy extends Plugin {
      * Register the event listener.
      */
     public void registerListener() {
-        getProxy().getPluginManager().registerListener(this, new BungeeSpyCommand(this));
+        getProxy().getPluginManager().registerListener(this, new BungeeSpyListener(this));
     }
 
     /**
@@ -67,5 +69,22 @@ public final class BungeeSpy extends Plugin {
         sender.sendMessage(
             ChatColor.translateAlternateColorCodes('&', getConfig().getString("locale.prefix") + " " + value)
         );
+    }
+
+    /**
+     * Determine if the player is a spy.
+     *
+     * @return boolean
+     */
+    public boolean isSpy(UUID player) {
+        return getConfig().contains("spies." + player);
+    }
+
+    /**
+     * Set a spy.
+     */
+    public void setSpy(UUID player, Object value) {
+        getConfig().set("spies." + player, value);
+        saveConfig();
     }
 }
