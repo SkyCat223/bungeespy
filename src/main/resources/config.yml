@@ -5,4 +5,6 @@ locale:
   list-none: "None"
   toggle-on: "You are now &aspying&f on commands network-wide."
   toggle-off: "You are no longer &aspying&f on commands network-wide."
+  config-reload: "Configuration successfully reloaded."
+  config-reload-failed: "Failed to reload configuration."
 spies: {}

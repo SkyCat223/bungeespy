@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.UUID;
 
 @CommandAlias("bungeespy")
-@CommandPermission("bungeespy.use")
 @Description("Spy on player commands network-wide.")
 public final class BungeeSpyCommand extends BaseCommand implements Listener {
     private final BungeeSpy plugin;
@@ -30,6 +29,8 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
      * @param player The proxied player.
      */
     @Default
+    @CommandPermission("bungeespy.use")
+    @Description("Toggle network-wide command spying.")
     public void onBungeeSpyCommand(ProxiedPlayer player) {
         UUID id = player.getUniqueId();
 
@@ -47,6 +48,8 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     }
 
     @Subcommand("list")
+    @CommandPermission("bungeespy.list")
+    @Description("List players who have spy enabled.")
     public void onBungeeSpyListCommand(CommandSender sender) {
         Collection<String> keys = this.plugin.getConfig().getSection("spies").getKeys();
         HashSet<String> spies = new HashSet<String>();
@@ -68,6 +71,19 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
                     String.join(", ", spies) :
                     this.plugin.getConfig().getString("locale.list-none"))
         );
+    }
+
+    @Subcommand("reload")
+    @CommandPermission("bungeespy.reload")
+    @Description("Reload the BungeeSpy configuration.")
+    public void onBungeeSpyReloadCommand(CommandSender sender) {
+        try {
+            this.plugin.registerConfig();
+
+            this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload"));
+        } catch (Exception e) {
+            this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload-failed"));
+        }
     }
 
     /**
