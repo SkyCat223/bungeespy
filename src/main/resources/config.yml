@@ -7,4 +7,5 @@ locale:
   toggle-off: "You are no longer &aspying&f on commands network-wide."
   config-reload: "Configuration successfully reloaded."
   config-reload-failed: "Failed to reload configuration."
+show-own-commands: true
 spies: {}
