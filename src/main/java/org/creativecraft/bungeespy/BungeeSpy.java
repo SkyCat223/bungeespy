@@ -74,6 +74,7 @@ public final class BungeeSpy extends Plugin {
     /**
      * Determine if the player is a spy.
      *
+     * @param  player The player UUID.
      * @return boolean
      */
     public boolean isSpy(UUID player) {
@@ -81,10 +82,20 @@ public final class BungeeSpy extends Plugin {
     }
 
     /**
-     * Set a spy.
+     * Add a spy.
+     *
+     * @param player The player UUID.
      */
-    public void setSpy(UUID player, Object value) {
-        getConfig().set("spies." + player, value);
+    public void addSpy(UUID player) {
+        getConfig().set("spies." + player, true);
+        saveConfig();
+    }
+
+    /**
+     * Remove a spy.
+     */
+    public void removeSpy(UUID player) {
+        getConfig().set("spies." + player, null);
         saveConfig();
     }
 }

@@ -21,7 +21,7 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     }
 
     /**
-     * Retrieve the message of the day.
+     * Toggle network-wide command spying.
      *
      * @param player The proxied player.
      */
@@ -32,18 +32,23 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
         UUID id = player.getUniqueId();
 
         if (this.plugin.isSpy(id)) {
-            this.plugin.setSpy(id, null);
+            this.plugin.removeSpy(id);
 
             this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-off"));
 
             return;
         }
 
-        this.plugin.setSpy(id, true);
+        this.plugin.addSpy(id);
 
         this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-on"));
     }
 
+    /**
+     * List players who have spy enabled.
+     *
+     * @param sender The command sender.
+     */
     @Subcommand("list")
     @CommandPermission("bungeespy.list")
     @Description("List players who have spy enabled.")
@@ -70,9 +75,14 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
         );
     }
 
+    /**
+     * Reload the plugin configuration.
+     *
+     * @param sender The command sender.
+     */
     @Subcommand("reload")
     @CommandPermission("bungeespy.reload")
-    @Description("Reload the BungeeSpy configuration.")
+    @Description("Reload the plugin configuration.")
     public void onBungeeSpyReloadCommand(CommandSender sender) {
         try {
             this.plugin.registerConfig();

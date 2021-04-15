@@ -26,6 +26,13 @@ public class BungeeSpyListener implements Listener {
             return;
         }
 
+        String command = event.getMessage().split(" ")[0].toLowerCase();
+
+        if (this.plugin.getConfig().getList("blacklist").contains(command)) {
+            return;
+        }
+
+
         for (ProxiedPlayer p : this.plugin.getProxy().getPlayers()) {
             if (p.hasPermission("bungeespy.use") && this.plugin.isSpy(p.getUniqueId())) {
                 if (p.getUniqueId() == player.getUniqueId() && !this.plugin.getConfig().getBoolean("show-own-commands")) {

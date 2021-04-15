@@ -1,11 +1,14 @@
+blacklist:
+  - /server
+  - //set
 locale:
-  prefix: "&7[&a&lCreative&fCraft&7]&f"
-  message: "&7[&8&l✚&7]&7 {0} executed {1}"
-  list: "Current spies: {0}"
-  list-none: "None"
-  toggle-on: "You are now &aspying&f on commands network-wide."
-  toggle-off: "You are no longer &aspying&f on commands network-wide."
   config-reload: "Configuration successfully reloaded."
   config-reload-failed: "Failed to reload configuration."
+  message: "&7[&8&l✚&7]&7 {0} executed {1}"
+  prefix: "&7[&a&lCreative&fCraft&7]&f"
+  list: "Current spies: {0}"
+  list-none: "None"
+  toggle-off: "You are no longer &aspying&f on commands network-wide."
+  toggle-on: "You are now &aspying&f on commands network-wide."
 show-own-commands: true
 spies: {}
