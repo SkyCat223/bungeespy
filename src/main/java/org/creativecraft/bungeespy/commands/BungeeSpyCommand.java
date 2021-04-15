@@ -2,12 +2,9 @@ package org.creativecraft.bungeespy.commands;
 
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.BaseCommand;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
 import org.creativecraft.bungeespy.BungeeSpy;
 
 import java.util.Collection;
