@@ -28,10 +28,20 @@ public class BungeeSpyListener implements Listener {
 
         String command = event.getMessage().split(" ")[0].toLowerCase();
 
-        if (this.plugin.getConfig().getList("blacklist").contains(command)) {
+        // Conditionally exclude specific servers.
+        if (this.plugin.getConfig().getStringList("excluded-servers").contains(player.getServer().getInfo().getName())) {
             return;
         }
 
+        // Conditionally exclude WorldEdit commands.
+        if (command.startsWith("//") && !this.plugin.getConfig().getBoolean("show-worldedit")) {
+            return;
+        }
+
+        // Conditionally exclude blacklisted commands.
+        if (this.plugin.getConfig().getList("blacklist").contains(command)) {
+            return;
+        }
 
         for (ProxiedPlayer p : this.plugin.getProxy().getPlayers()) {
             if (p.hasPermission("bungeespy.use") && this.plugin.isSpy(p.getUniqueId())) {

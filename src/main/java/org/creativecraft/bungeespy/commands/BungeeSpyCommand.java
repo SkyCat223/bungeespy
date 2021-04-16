@@ -14,11 +14,8 @@ import java.util.UUID;
 @CommandAlias("bungeespy")
 @Description("Spy on player commands network-wide.")
 public final class BungeeSpyCommand extends BaseCommand implements Listener {
-    private final BungeeSpy plugin;
-
-    public BungeeSpyCommand(BungeeSpy plugin) {
-        this.plugin = plugin;
-    }
+    @Dependency
+    private BungeeSpy plugin;
 
     /**
      * Toggle network-wide command spying.
@@ -32,17 +29,17 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     public void onBungeeSpyCommand(ProxiedPlayer player, @Optional String target) {
         UUID id = player.getUniqueId();
 
-        if (this.plugin.isSpy(id)) {
-            this.plugin.removeSpy(id);
+        if (plugin.isSpy(id)) {
+            plugin.removeSpy(id);
 
-            this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-off"));
+            plugin.message(player, plugin.getConfig().getString("locale.toggle-off"));
 
             return;
         }
 
-        this.plugin.addSpy(id);
+        plugin.addSpy(id);
 
-        this.plugin.message(player, this.plugin.getConfig().getString("locale.toggle-on"));
+        plugin.message(player, plugin.getConfig().getString("locale.toggle-on"));
     }
 
     /**
@@ -54,11 +51,11 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     @CommandPermission("bungeespy.list")
     @Description("List players who have spy enabled.")
     public void onBungeeSpyListCommand(CommandSender sender) {
-        Collection<String> keys = this.plugin.getConfig().getSection("spies").getKeys();
+        Collection<String> keys = plugin.getConfig().getSection("spies").getKeys();
         HashSet<String> spies = new HashSet<String>();
 
         keys.forEach(spy -> {
-            ProxiedPlayer s = this.plugin.getProxy().getPlayer(UUID.fromString(spy));
+            ProxiedPlayer s = plugin.getProxy().getPlayer(UUID.fromString(spy));
 
             if (s == null) {
                 return;
@@ -67,12 +64,12 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
             spies.add(s.getName());
         });
 
-        this.plugin.message(
+        plugin.message(
             sender,
-            this.plugin.getConfig().getString("locale.list")
+            plugin.getConfig().getString("locale.list")
                 .replace("{0}", spies.size() != 0 ?
                     String.join(", ", spies) :
-                    this.plugin.getConfig().getString("locale.list-none"))
+                    plugin.getConfig().getString("locale.list-none"))
         );
     }
 
@@ -86,11 +83,11 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     @Description("Reload the plugin configuration.")
     public void onBungeeSpyReloadCommand(CommandSender sender) {
         try {
-            this.plugin.registerConfig();
+            plugin.registerConfig();
 
-            this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload"));
+            plugin.message(sender, plugin.getConfig().getString("locale.config-reload"));
         } catch (Exception e) {
-            this.plugin.message(sender, this.plugin.getConfig().getString("locale.config-reload-failed"));
+            plugin.message(sender, plugin.getConfig().getString("locale.config-reload-failed"));
         }
     }
 }

@@ -40,7 +40,7 @@ public final class BungeeSpy extends Plugin {
     public void registerCommands() {
         BungeeCommandManager commandManager = new BungeeCommandManager(this);
 
-        commandManager.registerCommand(new BungeeSpyCommand(this));
+        commandManager.registerCommand(new BungeeSpyCommand());
     }
 
     /**

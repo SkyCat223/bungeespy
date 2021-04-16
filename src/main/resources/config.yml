@@ -1,6 +1,8 @@
 blacklist:
   - /server
   - //set
+excluded-servers:
+  - example
 locale:
   config-reload: "Configuration successfully reloaded."
   config-reload-failed: "Failed to reload configuration."
@@ -11,4 +13,5 @@ locale:
   toggle-off: "You are no longer &aspying&f on commands network-wide."
   toggle-on: "You are now &aspying&f on commands network-wide."
 show-own-commands: true
+show-worldedit: true
 spies: {}
