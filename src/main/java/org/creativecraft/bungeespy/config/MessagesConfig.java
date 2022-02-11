@@ -11,7 +11,7 @@ public class MessagesConfig {
     /**
      * Initialize the messages config instance.
      *
-     * @param plugin ExampleBungeePlugin
+     * @param plugin BungeeSpyPlugin
      */
     public MessagesConfig(BungeeSpyPlugin plugin) {
         this.plugin = plugin;

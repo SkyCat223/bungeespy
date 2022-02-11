@@ -13,7 +13,7 @@ public class SettingsConfig {
     /**
      * Initialize the settings config instance.
      *
-     * @param plugin ExampleBungeePlugin
+     * @param plugin BungeeSpyPlugin
      */
     public SettingsConfig(BungeeSpyPlugin plugin) {
         this.plugin = plugin;
@@ -32,7 +32,7 @@ public class SettingsConfig {
         config.setDefault("show-own-commands", true);
         config.setDefault("show-worldedit", true);
         config.setDefault("excluded-servers", Arrays.asList("example"));
-        config.setDefault("blacklist", Arrays.asList("/help", "//set"));
+        config.setDefault("blacklist", Arrays.asList("/example"));
     }
 
     /**

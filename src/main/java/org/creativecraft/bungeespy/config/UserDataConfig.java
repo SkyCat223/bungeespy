@@ -11,7 +11,7 @@ public class UserDataConfig {
     /**
      * Initialize the settings config instance.
      *
-     * @param plugin ExampleBungeePlugin
+     * @param plugin BungeeSpyPlugin
      */
     public UserDataConfig(BungeeSpyPlugin plugin) {
         this.plugin = plugin;

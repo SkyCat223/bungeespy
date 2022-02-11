@@ -9,7 +9,6 @@ import net.md_5.bungee.api.plugin.Listener;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -58,18 +57,14 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     @CommandPermission("bungeespy.use")
     @Description("Toggle network-wide command spying.")
     public void onToggle(ProxiedPlayer player) {
-        String key = "players." + player.getUniqueId();
-
-        if (plugin.getUserData().contains(key)) {
-            plugin.getUserData().remove(key);
-
+        if (plugin.getSpyManager().isSpy(player.getUniqueId())) {
+            plugin.getSpyManager().removeSpy(player.getUniqueId());
             plugin.sendMessage(player, plugin.localize("messages.toggle.off"));
 
             return;
         }
 
-        plugin.getUserData().set(key, true);
-
+        plugin.getSpyManager().addSpy(player.getUniqueId());
         plugin.sendMessage(player, plugin.localize("messages.toggle.on"));
     }
 
@@ -82,10 +77,9 @@ public final class BungeeSpyCommand extends BaseCommand implements Listener {
     @CommandPermission("bungeespy.list")
     @Description("List players who have spy enabled.")
     public void onList(CommandSender sender) {
-        Collection<String> keys = plugin.getUserData().getSection("players").keySet();
         Set<String> spies = new HashSet<String>();
 
-        keys.forEach(spy -> {
+        plugin.getSpyManager().getSpies().forEach(spy -> {
             ProxiedPlayer player = plugin.getProxy().getPlayer(UUID.fromString(spy));
 
             if (player == null) {

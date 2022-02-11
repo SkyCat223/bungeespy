@@ -20,6 +20,7 @@ public final class BungeeSpyPlugin extends Plugin {
     private SettingsConfig settingsConfig;
     private MessagesConfig messagesConfig;
     private UserDataConfig userDataConfig;
+    private SpyManager spyManager;
 
     /**
      * Enable the plugin.
@@ -27,6 +28,7 @@ public final class BungeeSpyPlugin extends Plugin {
     @Override
     public void onEnable() {
         plugin = this;
+        spyManager = new SpyManager(this);
 
         registerConfigs();
         registerListeners();
@@ -111,6 +113,15 @@ public final class BungeeSpyPlugin extends Plugin {
      */
     public Config getUserData() {
         return userDataConfig.getUserData();
+    }
+
+    /**
+     * Retrieve the spy manager instance.
+     *
+     * @return SpyManager
+     */
+    public SpyManager getSpyManager() {
+        return spyManager;
     }
 
     /**
