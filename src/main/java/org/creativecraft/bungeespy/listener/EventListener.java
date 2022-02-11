@@ -1,15 +1,19 @@
-package org.creativecraft.bungeespy;
+package org.creativecraft.bungeespy.listener;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import org.creativecraft.bungeespy.BungeeSpyPlugin;
 
-public class BungeeSpyListener implements Listener {
-    private final BungeeSpy plugin;
+public class EventListener implements Listener {
+    private final BungeeSpyPlugin plugin;
 
-    public BungeeSpyListener(BungeeSpy plugin) {
+    /**
+     * Initialize the event listener instance.
+     */
+    public EventListener(BungeeSpyPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -28,31 +32,28 @@ public class BungeeSpyListener implements Listener {
 
         String command = event.getMessage().split(" ")[0].toLowerCase();
 
-        // Conditionally exclude specific servers.
-        if (this.plugin.getConfig().getStringList("excluded-servers").contains(player.getServer().getInfo().getName())) {
+        if (plugin.getConfig().getStringList("excluded-servers").contains(player.getServer().getInfo().getName())) {
             return;
         }
 
-        // Conditionally exclude WorldEdit commands.
-        if (command.startsWith("//") && !this.plugin.getConfig().getBoolean("show-worldedit")) {
+        if (command.startsWith("//") && !plugin.getConfig().getBoolean("show-worldedit")) {
             return;
         }
 
-        // Conditionally exclude blacklisted commands.
-        if (this.plugin.getConfig().getList("blacklist").contains(command)) {
+        if (plugin.getConfig().getList("blacklist").contains(command)) {
             return;
         }
 
-        for (ProxiedPlayer p : this.plugin.getProxy().getPlayers()) {
-            if (p.hasPermission("bungeespy.use") && this.plugin.isSpy(p.getUniqueId())) {
-                if (p.getUniqueId() == player.getUniqueId() && !this.plugin.getConfig().getBoolean("show-own-commands")) {
+        for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
+            if (p.hasPermission("bungeespy.use") && plugin.getUserData().contains("players." + p.getUniqueId())) {
+                if (p.getUniqueId() == player.getUniqueId() && !plugin.getConfig().getBoolean("show-own-commands")) {
                     continue;
                 }
 
                 p.sendMessage(
                     ChatColor.translateAlternateColorCodes(
                         '&',
-                        this.plugin.getConfig().getString("locale.message")
+                        plugin.localize("messages.generic.message")
                             .replace("{0}", player.getName())
                             .replace("{1}", event.getMessage())
                     )
