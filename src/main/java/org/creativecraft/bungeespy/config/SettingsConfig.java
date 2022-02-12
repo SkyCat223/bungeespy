@@ -31,6 +31,7 @@ public class SettingsConfig {
         config.setDefault("command", "bungeespy");
         config.setDefault("show-own-commands", true);
         config.setDefault("show-worldedit", true);
+        config.setDefault("show-empty", true);
         config.setDefault("excluded-servers", Arrays.asList("example"));
         config.setDefault("blacklist", Arrays.asList("/example"));
     }

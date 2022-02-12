@@ -44,7 +44,7 @@ public class MessagesConfig {
 
         messages.setDefault("messages.help.header", "&a&m+&8&m                           &a&l Bungee&fSpy &8&m                           &a&m+");
         messages.setDefault("messages.help.format", "&8➝ &a/{command} &7{parameters} &f- {description}");
-        messages.setDefault("messages.help.footer", "&a&m+&8&m                                                                         &a&m+");
+        messages.setDefault("messages.help.footer", "&a&m+&8&m                                                                        &a&m+");
         messages.setDefault("messages.help.description", "View the plugin help.");
     }
 

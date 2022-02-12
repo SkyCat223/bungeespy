@@ -24,7 +24,7 @@ public class EventListener implements Listener {
      */
     @EventHandler
     public void onChatEvent(ChatEvent event) {
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
+        ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
 
         if (!event.isCommand() && !event.isProxyCommand()) {
             return;
@@ -32,7 +32,7 @@ public class EventListener implements Listener {
 
         String command = event.getMessage().split(" ")[0].toLowerCase();
 
-        if (plugin.getConfig().getStringList("excluded-servers").contains(player.getServer().getInfo().getName())) {
+        if (plugin.getConfig().getStringList("excluded-servers").contains(sender.getServer().getInfo().getName())) {
             return;
         }
 
@@ -40,23 +40,25 @@ public class EventListener implements Listener {
             return;
         }
 
+        if (command.equals("/") && !plugin.getConfig().getBoolean("show-empty")) {
+            return;
+        }
+
         if (plugin.getConfig().getList("blacklist").contains(command)) {
             return;
         }
 
-        for (ProxiedPlayer p : plugin.getProxy().getPlayers()) {
-            if (p.hasPermission("bungeespy.use") && plugin.getUserData().contains("players." + p.getUniqueId())) {
-                if (p.getUniqueId() == player.getUniqueId() && !plugin.getConfig().getBoolean("show-own-commands")) {
+        for (ProxiedPlayer player : plugin.getProxy().getPlayers()) {
+            if (player.hasPermission("bungeespy.use") && plugin.getSpyManager().isSpy(player.getUniqueId())) {
+                if (player.getUniqueId() == sender.getUniqueId() && !plugin.getConfig().getBoolean("show-own-commands")) {
                     continue;
                 }
 
-                p.sendMessage(
-                    ChatColor.translateAlternateColorCodes(
-                        '&',
-                        plugin.localize("messages.generic.message")
-                            .replace("{0}", player.getName())
-                            .replace("{1}", event.getMessage())
-                    )
+                plugin.sendRawMessage(
+                    player,
+                    plugin.localize("messages.generic.message")
+                        .replace("{0}", player.getName())
+                        .replace("{1}", event.getMessage())
                 );
             }
         }

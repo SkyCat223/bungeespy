@@ -29,7 +29,7 @@ public class SpyManager {
      * Add the player as a spy.
      */
     public void addSpy(UUID player) {
-        plugin.getUserData().set("players" + player, true);
+        plugin.getUserData().set("players." + player, true);
     }
 
     /**
