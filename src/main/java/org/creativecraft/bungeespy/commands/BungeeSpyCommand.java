@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
-@CommandAlias("bungeespy")
+@CommandAlias("bspy")
 @Description("Spy on player commands network-wide.")
 public final class BungeeSpyCommand extends BaseCommand implements Listener {
     @Dependency
